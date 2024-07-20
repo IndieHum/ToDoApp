@@ -25,21 +25,21 @@ function DisplayToDos(data) {
     let DisplayTaskToDoArray = data || TaskToDoArray;
     TableBody.innerHTML = "";
     if (!DisplayTaskToDoArray.length) {
-        TableBody.innerHTML = "<tr><td colspan='4'>No Task Found!</td></tr>";
+        TableBody.innerHTML = "<tr><td colspan='4'>سرنویسی یافت نشد!</td></tr>";
         return;
     } else {
         DisplayTaskToDoArray.forEach((ToDo) => {
             TableBody.innerHTML += `
       <tr>
         <td>${ToDo.name}</td>
-        <td>${ToDo.date || "No Date"}</td>
-        <td>${ToDo.completed ? "Completed" : "Pending"}</td>
+        <td>${ToDo.date || "بدون تاریخ"}</td>
+        <td>${ToDo.completed ? "پایان‌یافته" : "درحال‌انجام"}</td>
         <td>
-          <button onclick="EditButtonHandler('${ToDo.id}')">Edit</button>
+          <button onclick="EditButtonHandler('${ToDo.id}')">ویرایش</button>
           <button onclick="StatusButtonHandler('${ToDo.id}')">
-          ${ToDo.completed ? "UnDo" : "Do"}
+          ${ToDo.completed ? "معلق" : "پایان"}
           </button>
-          <button onclick="DeleteButtonHandler('${ToDo.id}')">Delete</button>
+          <button onclick="DeleteButtonHandler('${ToDo.id}')">حذف</button>
         </td>
       </tr>`;
         });
@@ -61,23 +61,23 @@ function ShowMessage(message, type) {
 
 function DeleteAllHandler() {
     if (!TaskToDoArray.length) {
-        ShowMessage("There is no task!", "NotOk");
+        ShowMessage("نامی وجود ندارد!", "NotOk");
     } else {
         TaskToDoArray = [];
-        RunTheProgram("All Tasks Deleted!", "Ok");
+        RunTheProgram("تمامی کارها حذف شد!", "Ok");
     }
 }
 
 function DeleteButtonHandler(id) {
     const NewTaskToDoArray = TaskToDoArray.filter((ToDo) => ToDo.id !== id);
     TaskToDoArray = NewTaskToDoArray;
-    RunTheProgram("Task Deleted!", "Ok");
+    RunTheProgram("این کار حذف شد!", "Ok");
 }
 
 function StatusButtonHandler(id) {
     const NewToDo = TaskToDoArray.find((ToDo) => ToDo.id === id);
     NewToDo.completed = !NewToDo.completed;
-    RunTheProgram("Task Changed!", "Ok");
+    RunTheProgram("چگونگی این کار تغییر کرد!", "Ok");
 }
 
 function FilterButtonHandler(event) {
@@ -121,7 +121,7 @@ function ApplyEditButtonHandler() {
     DateInput.value = "";
     ConfirmButton.style.display = "inline-block";
     EditButton.style.display = "none";
-    RunTheProgram("Your Task Changed!", "Ok");
+    RunTheProgram("این کار ویرایش شد!", "Ok");
 }
 
 function GenerateId() {
@@ -141,7 +141,7 @@ function AddTaskHandler() {
     };
     if (TaskNameValue) {
         TaskToDoArray.push(TaskToDo);
-        RunTheProgram("Task Added Succusfully", "Ok");
+        RunTheProgram("این کار با موفقیت افزوده شد!", "Ok");
         TextInput.value = "";
         DateInput.value = "";
     } else {
